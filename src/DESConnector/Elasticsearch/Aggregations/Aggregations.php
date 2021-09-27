@@ -73,7 +73,7 @@ class Aggregations implements AggregationsInterface
      * Private serialize method to prevent serializing of the *Singleton*
      * instance.
      */
-    private function __sleep()
+    public function __sleep()
     {
     }
 
@@ -108,6 +108,9 @@ class Aggregations implements AggregationsInterface
         foreach ($this->aggregations as $name => $aggregationObj) {
             $aggsArray = $aggregationObj->constructAggregation();
             $aggregationArray[$name] = $aggsArray[$name];
+            if (isset($aggsArray[$name . '_global'])) {
+              $aggregationArray[$name . '_global'] = $aggsArray[$name . '_global'];
+            }
         }
 
         if (!empty($aggregationArray)) {
